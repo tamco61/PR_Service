@@ -1,6 +1,9 @@
 package handler
 
-import "gorm.io/gorm"
+import (
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+)
 
 type UserHandler struct {
 	db *gorm.DB
@@ -8,4 +11,12 @@ type UserHandler struct {
 
 func NewUserHandler(db *gorm.DB) *UserHandler {
 	return &UserHandler{db: db}
+}
+
+func (h *UserHandler) GetReview(c *gin.Context) {
+
+}
+
+func (h *UserHandler) SetIsActive(c *gin.Context) {
+
 }
