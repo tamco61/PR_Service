@@ -1,5 +1,6 @@
 package models
 
 type Team struct {
-	Users []User
+	ID    uint   `gorm:"primaryKey"`
+	Users []User `gorm:"many2many:team_users"`
 }
