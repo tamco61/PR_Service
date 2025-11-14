@@ -1,16 +1,17 @@
 package handler
 
 import (
+	"app/internal/service"
+
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 type UserHandler struct {
-	db *gorm.DB
+	service *service.UserService
 }
 
-func NewUserHandler(db *gorm.DB) *UserHandler {
-	return &UserHandler{db: db}
+func NewUserHandler(s *service.UserService) *UserHandler {
+	return &UserHandler{service: s}
 }
 
 func (h *UserHandler) GetReview(c *gin.Context) {

@@ -1,16 +1,17 @@
 package handler
 
 import (
+	"app/internal/service"
+
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 type TeamHandler struct {
-	db *gorm.DB
+	service *service.TeamService
 }
 
-func NewTeamHandler(db *gorm.DB) *TeamHandler {
-	return &TeamHandler{db: db}
+func NewTeamHandler(s *service.TeamService) *TeamHandler {
+	return &TeamHandler{service: s}
 }
 
 func (h *TeamHandler) Get(c *gin.Context) {

@@ -1,16 +1,17 @@
 package handler
 
 import (
+	"app/internal/service"
+
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 type PullRequestHandler struct {
-	db *gorm.DB
+	service *service.PullRequestService
 }
 
-func NewPullRequestHandler(db *gorm.DB) *PullRequestHandler {
-	return &PullRequestHandler{db: db}
+func NewPullRequestHandler(s *service.PullRequestService) *PullRequestHandler {
+	return &PullRequestHandler{service: s}
 }
 
 func (h *PullRequestHandler) Create(c *gin.Context) {

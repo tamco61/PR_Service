@@ -5,6 +5,7 @@ import (
 	"app/internal/api/handler"
 	"app/internal/config"
 	"app/internal/db"
+	"app/internal/service"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -18,9 +19,13 @@ func main() {
 		log.Fatal("failed to connect database:", err)
 	}
 
-	userHandler := handler.NewUserHandler(db)
-	teamHandler := handler.NewTeamHandler(db)
-	pullrequestHandler := handler.NewPullRequestHandler(db)
+	userService := service.NewUserService(db)
+	teamService := service.NewTeamService(db)
+	pullrequestService := service.NewPullRequestService(db)
+
+	userHandler := handler.NewUserHandler(userService)
+	teamHandler := handler.NewTeamHandler(teamService)
+	pullrequestHandler := handler.NewPullRequestHandler(pullrequestService)
 
 	r := gin.Default()
 	routes.RegisterRoutes(r, teamHandler, userHandler, pullrequestHandler)
