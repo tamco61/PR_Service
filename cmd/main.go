@@ -14,7 +14,7 @@ import (
 func main() {
 	cfg := config.Load()
 
-	db, err := db.InitDB(cfg.DBPath)
+	db, err := db.InitDB(cfg.DBDSN)
 	if err != nil {
 		log.Fatal("failed to connect database:", err)
 	}

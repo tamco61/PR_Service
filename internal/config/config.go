@@ -5,13 +5,13 @@ import (
 )
 
 type Config struct {
-	DBPath     string
+	DBDSN      string
 	ServerAddr string
 }
 
 func Load() *Config {
 	return &Config{
-		DBPath:     getEnv("SQLITE_DB_PATH", "database.db"),
+		DBDSN:      getEnv("DB_DSN", "host=localhost user=appuser password=secretpassword dbname=appdb port=5432 sslmode=disable"),
 		ServerAddr: getEnv("SERVER_ADDR", ":8080"),
 	}
 }
