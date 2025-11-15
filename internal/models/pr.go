@@ -1,5 +1,6 @@
 package models
 
+// todo проверка по условию корректности моделей
 import "time"
 
 type PRStatus string

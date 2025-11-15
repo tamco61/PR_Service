@@ -1,5 +1,7 @@
 package handler
 
+// todo прописать ошибки и статус коды
+
 import (
 	requests "app/internal/dto"
 	"app/internal/service"

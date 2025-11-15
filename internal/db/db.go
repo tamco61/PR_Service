@@ -1,5 +1,6 @@
 package db
 
+// todo продумать необходимость миграций
 import (
 	"app/internal/models"
 
