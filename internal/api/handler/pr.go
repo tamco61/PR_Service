@@ -23,6 +23,13 @@ func (h *PullRequestHandler) Create(c *gin.Context) {
 		return
 	}
 
+	pr, err := h.service.Create(req.Name, req.AuthorID)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, pr)
 }
 
 func (h *PullRequestHandler) Merge(c *gin.Context) {
@@ -31,6 +38,14 @@ func (h *PullRequestHandler) Merge(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	pr, err := h.service.Merge(req.ID)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, pr)
 }
 
 func (h *PullRequestHandler) Reassign(c *gin.Context) {
@@ -39,4 +54,12 @@ func (h *PullRequestHandler) Reassign(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	pr, err := h.service.Reassign(req.PullReqID, req.OldUserID)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, pr)
 }

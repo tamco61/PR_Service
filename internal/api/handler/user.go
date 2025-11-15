@@ -23,12 +23,13 @@ func (h *UserHandler) GetReview(c *gin.Context) {
 		return
 	}
 
-	// reviews, err := h.service.GetReview(req.ID)
-	// if err != nil {
-	// 	c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	// 	return
-	// }
-	// c.JSON(http.StatusOK, reviews)
+	user, err := h.service.GetReview(req.ID)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, user)
 
 }
 
@@ -38,4 +39,12 @@ func (h *UserHandler) SetIsActive(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	user, err := h.service.SetIsActive(req.ID, req.IsActive)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, user)
 }
