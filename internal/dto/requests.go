@@ -1,4 +1,4 @@
-package dto
+package requests
 
 type TeamGetRequest struct {
 	ID uint `json:"id"  validate:"required"`
