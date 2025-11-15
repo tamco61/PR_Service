@@ -9,15 +9,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type PullRequestService struct {
+type PullRequest struct {
 	db *gorm.DB
 }
 
-func NewPullRequestService(db *gorm.DB) *PullRequestService {
-	return &PullRequestService{db: db}
+func NewPullRequest(db *gorm.DB) *PullRequest {
+	return &PullRequest{db: db}
 }
 
-func (s *PullRequestService) Create(pr_name string, author_id string) (models.PullRequest, error) {
+func (s *PullRequest) Create(pr_name string, author_id string) (models.PullRequest, error) {
 	author := models.User{ID: author_id}
 	if err := s.db.First(&author).Error; err != nil {
 		return models.PullRequest{}, err
@@ -93,7 +93,7 @@ func (s *PullRequestService) Create(pr_name string, author_id string) (models.Pu
 	return pullreq, err
 }
 
-func (s *PullRequestService) Merge(pr_id string) (models.PullRequest, error) {
+func (s *PullRequest) Merge(pr_id string) (models.PullRequest, error) {
 	pullreq := models.PullRequest{ID: pr_id}
 
 	tx := s.db.Begin()
@@ -126,7 +126,7 @@ func (s *PullRequestService) Merge(pr_id string) (models.PullRequest, error) {
 	return pullreq, nil
 }
 
-func (s *PullRequestService) Reassign(pr_id string, old_user_id string) (models.PullRequest, error) {
+func (s *PullRequest) Reassign(pr_id string, old_user_id string) (models.PullRequest, error) {
 	pullreq := models.PullRequest{ID: pr_id}
 
 	tx := s.db.Begin()

@@ -8,15 +8,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type PullRequestHandler struct {
-	service *service.PullRequestService
+type PullRequest struct {
+	service *service.PullRequest
 }
 
-func NewPullRequestHandler(s *service.PullRequestService) *PullRequestHandler {
-	return &PullRequestHandler{service: s}
+func NewPullRequest(s *service.PullRequest) *PullRequest {
+	return &PullRequest{service: s}
 }
 
-func (h *PullRequestHandler) Create(c *gin.Context) {
+func (h *PullRequest) Create(c *gin.Context) {
 	var req requests.PullRequestCreateReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -32,7 +32,7 @@ func (h *PullRequestHandler) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, pr)
 }
 
-func (h *PullRequestHandler) Merge(c *gin.Context) {
+func (h *PullRequest) Merge(c *gin.Context) {
 	var req requests.PullRequestMergeReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -48,7 +48,7 @@ func (h *PullRequestHandler) Merge(c *gin.Context) {
 	c.JSON(http.StatusCreated, pr)
 }
 
-func (h *PullRequestHandler) Reassign(c *gin.Context) {
+func (h *PullRequest) Reassign(c *gin.Context) {
 	var req requests.PullRequestReassignReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

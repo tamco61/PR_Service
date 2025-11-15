@@ -8,15 +8,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UserHandler struct {
-	service *service.UserService
+type User struct {
+	service *service.User
 }
 
-func NewUserHandler(s *service.UserService) *UserHandler {
-	return &UserHandler{service: s}
+func NewUser(s *service.User) *User {
+	return &User{service: s}
 }
 
-func (h *UserHandler) GetReview(c *gin.Context) {
+func (h *User) GetReview(c *gin.Context) {
 	var req requests.UserGetReviewReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -33,7 +33,7 @@ func (h *UserHandler) GetReview(c *gin.Context) {
 
 }
 
-func (h *UserHandler) SetIsActive(c *gin.Context) {
+func (h *User) SetIsActive(c *gin.Context) {
 	var req requests.UserSetIsActiveReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

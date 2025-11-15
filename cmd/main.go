@@ -19,16 +19,16 @@ func main() {
 		log.Fatal("failed to connect database:", err)
 	}
 
-	userService := service.NewUserService(db)
-	teamService := service.NewTeamService(db)
-	pullrequestService := service.NewPullRequestService(db)
+	userService := service.NewUser(db)
+	teamService := service.NewTeam(db)
+	pullRequestService := service.NewPullRequest(db)
 
-	userHandler := handler.NewUserHandler(userService)
-	teamHandler := handler.NewTeamHandler(teamService)
-	pullrequestHandler := handler.NewPullRequestHandler(pullrequestService)
+	userHandler := handler.NewUser(userService)
+	teamHandler := handler.NewTeam(teamService)
+	pullRequestHandler := handler.NewPullRequest(pullRequestService)
 
 	r := gin.Default()
-	routes.RegisterRoutes(r, teamHandler, userHandler, pullrequestHandler)
+	routes.RegisterRoutes(r, teamHandler, userHandler, pullRequestHandler)
 
 	if err := r.Run(cfg.ServerAddr); err != nil {
 		log.Fatal("failed to run server:", err)

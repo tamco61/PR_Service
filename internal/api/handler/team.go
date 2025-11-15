@@ -8,15 +8,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type TeamHandler struct {
-	service *service.TeamService
+type Team struct {
+	service *service.Team
 }
 
-func NewTeamHandler(s *service.TeamService) *TeamHandler {
-	return &TeamHandler{service: s}
+func NewTeam(s *service.Team) *Team {
+	return &Team{service: s}
 }
 
-func (h *TeamHandler) Get(c *gin.Context) {
+func (h *Team) Get(c *gin.Context) {
 	var req requests.TeamGetReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -32,7 +32,7 @@ func (h *TeamHandler) Get(c *gin.Context) {
 	c.JSON(http.StatusCreated, team)
 }
 
-func (h *TeamHandler) Add(c *gin.Context) {
+func (h *Team) Add(c *gin.Context) {
 	var req requests.TeamAddReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

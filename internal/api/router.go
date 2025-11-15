@@ -6,23 +6,23 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterRoutes(r *gin.Engine, teamHandler *handler.TeamHandler, userHandler *handler.UserHandler, pullrequestHandler *handler.PullRequestHandler) {
+func RegisterRoutes(r *gin.Engine, Team *handler.Team, User *handler.User, PullRequest *handler.PullRequest) {
 	team := r.Group("/team")
 	{
-		team.GET("/get", teamHandler.Get)
-		team.POST("/add", teamHandler.Add)
+		team.GET("/get", Team.Get)
+		team.POST("/add", Team.Add)
 	}
 
 	users := r.Group("/users")
 	{
-		users.GET("/getReview", userHandler.GetReview)
-		users.POST("/setIsActive", userHandler.SetIsActive)
+		users.GET("/getReview", User.GetReview)
+		users.POST("/setIsActive", User.SetIsActive)
 	}
 
 	pullrequest := r.Group("/pullRequest")
 	{
-		pullrequest.POST("/create", pullrequestHandler.Create)
-		pullrequest.POST("/merge", pullrequestHandler.Merge)
-		pullrequest.POST("/reassign", pullrequestHandler.Reassign)
+		pullrequest.POST("/create", PullRequest.Create)
+		pullrequest.POST("/merge", PullRequest.Merge)
+		pullrequest.POST("/reassign", PullRequest.Reassign)
 	}
 }

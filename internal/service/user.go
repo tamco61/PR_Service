@@ -6,15 +6,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type UserService struct {
+type User struct {
 	db *gorm.DB
 }
 
-func NewUserService(db *gorm.DB) *UserService {
-	return &UserService{db: db}
+func NewUser(db *gorm.DB) *User {
+	return &User{db: db}
 }
 
-func (s *UserService) GetReview(user_id string) ([]models.PullRequest, error) {
+func (s *User) GetReview(user_id string) ([]models.PullRequest, error) {
 	user := models.User{ID: user_id}
 	if err := s.db.First(&user).Error; err != nil {
 		return nil, err
@@ -31,7 +31,7 @@ func (s *UserService) GetReview(user_id string) ([]models.PullRequest, error) {
 	return pullreqs, err
 }
 
-func (s *UserService) SetIsActive(user_id string, is_active bool) (models.User, error) {
+func (s *User) SetIsActive(user_id string, is_active bool) (models.User, error) {
 	user := models.User{ID: user_id, IsActive: is_active}
 	if err := s.db.First(&user).Error; err != nil {
 		return models.User{}, err
