@@ -17,7 +17,7 @@ func NewUserHandler(s *service.UserService) *UserHandler {
 }
 
 func (h *UserHandler) GetReview(c *gin.Context) {
-	var req requests.UserGetReviewRequest
+	var req requests.UserGetReviewReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -33,7 +33,7 @@ func (h *UserHandler) GetReview(c *gin.Context) {
 }
 
 func (h *UserHandler) SetIsActive(c *gin.Context) {
-	var req requests.UserSetIsActiveRequest
+	var req requests.UserSetIsActiveReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

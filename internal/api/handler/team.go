@@ -17,7 +17,7 @@ func NewTeamHandler(s *service.TeamService) *TeamHandler {
 }
 
 func (h *TeamHandler) Get(c *gin.Context) {
-	var req requests.TeamGetRequest
+	var req requests.TeamGetReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -25,7 +25,7 @@ func (h *TeamHandler) Get(c *gin.Context) {
 }
 
 func (h *TeamHandler) Add(c *gin.Context) {
-	var req requests.TeamAddRequest
+	var req requests.TeamAddReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

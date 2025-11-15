@@ -17,15 +17,16 @@ func NewPullRequestHandler(s *service.PullRequestService) *PullRequestHandler {
 }
 
 func (h *PullRequestHandler) Create(c *gin.Context) {
-	var req requests.PullRequestCreateRequest
+	var req requests.PullRequestCreateReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
 }
 
 func (h *PullRequestHandler) Merge(c *gin.Context) {
-	var req requests.PullRequestMergeRequest
+	var req requests.PullRequestMergeReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -33,7 +34,7 @@ func (h *PullRequestHandler) Merge(c *gin.Context) {
 }
 
 func (h *PullRequestHandler) Reassign(c *gin.Context) {
-	var req requests.PullRequestReassignRequest
+	var req requests.PullRequestReassignReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
