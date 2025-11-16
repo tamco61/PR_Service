@@ -4,16 +4,16 @@ package dto
 import "app/internal/models"
 
 type TeamGetReq struct {
-	ID string `json:"id" validate:"required"`
+	TeamName string `json:"team_name" validate:"required"`
 }
 
 type TeamAddReq struct {
-	Name    string        `json:"name" validate:"required"`
-	Members []models.User `json:"members" validate:"required"`
+	TeamName string        `json:"name" validate:"required"`
+	Members  []models.User `json:"members" validate:"required"`
 }
 
 type UserGetReviewReq struct {
-	ID string `json:"id" validate:"required"`
+	ID string `json:"user_id" validate:"required"`
 }
 
 type UserSetIsActiveReq struct {

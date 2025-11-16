@@ -3,8 +3,10 @@ package handler
 // todo прописать ошибки и статус коды
 
 import (
+	"app/internal/dto"
 	requests "app/internal/dto"
 	"app/internal/service"
+	"app/internal/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -44,9 +46,9 @@ func (h *User) SetIsActive(c *gin.Context) {
 
 	user, err := h.service.SetIsActive(req.ID, req.IsActive)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusNotFound, utils.JSONError(dto.ErrorCodeNotFound, "user not found"))
 		return
 	}
 
-	c.JSON(http.StatusCreated, user)
+	c.JSON(http.StatusOK, user)
 }

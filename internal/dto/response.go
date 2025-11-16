@@ -2,3 +2,23 @@ package dto
 
 // todo: сделать responese и заменить их в handler
 // todo ErrorResponese и в целом унифицировать выводы error
+
+type ErrorResponese struct {
+	Error ErrorDetail `json:"error" binding:"required"`
+}
+
+type ErrorDetail struct {
+	Code    ErrorCode `json:"code" binding:"required"`
+	Message string    `json:"message" binding:"required"`
+}
+
+type ErrorCode string
+
+const (
+	ErrorCodeTeamExists  ErrorCode = "TEAM_EXISTS"
+	ErrorCodePRExists    ErrorCode = "PR_EXISTS"
+	ErrorCodePRMerged    ErrorCode = "PR_MERGED"
+	ErrorCodeNotAssigned ErrorCode = "NOT_ASSIGNED"
+	ErrorCodeNoCandidate ErrorCode = "NO_CANDIDATE"
+	ErrorCodeNotFound    ErrorCode = "NOT_FOUND"
+)

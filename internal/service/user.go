@@ -5,6 +5,7 @@ package service
 // todo подумать над repository слоем
 import (
 	"app/internal/models"
+	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -37,7 +38,7 @@ func (s *User) GetReview(user_id string) ([]models.PullRequest, error) {
 func (s *User) SetIsActive(user_id string, is_active bool) (models.User, error) {
 	user := models.User{ID: user_id, IsActive: is_active}
 	if err := s.db.First(&user).Error; err != nil {
-		return models.User{}, err
+		return models.User{}, fmt.Errorf("user not found")
 	}
 
 	if err := s.db.Model(&user).Update("is_active", is_active).Error; err != nil {

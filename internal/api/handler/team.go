@@ -3,8 +3,10 @@ package handler
 // todo прописать ошибки и статус коды
 
 import (
+	"app/internal/dto"
 	requests "app/internal/dto"
 	"app/internal/service"
+	"app/internal/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -25,13 +27,13 @@ func (h *Team) Get(c *gin.Context) {
 		return
 	}
 
-	team, err := h.service.Get(req.ID)
+	team, err := h.service.Get(req.TeamName)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, utils.JSONError(dto.ErrorCodeNotFound, "team not found"))
 		return
 	}
 
-	c.JSON(http.StatusCreated, team)
+	c.JSON(http.StatusOK, team)
 }
 
 func (h *Team) Add(c *gin.Context) {
@@ -41,9 +43,9 @@ func (h *Team) Add(c *gin.Context) {
 		return
 	}
 
-	team, err := h.service.Add(req.Name, req.Members)
+	team, err := h.service.Add(req.TeamName, req.Members)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, utils.JSONError(dto.ErrorCodeTeamExists, "team_name already exists"))
 		return
 	}
 

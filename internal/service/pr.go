@@ -3,9 +3,10 @@ package service
 // todo прописать ошибки
 // todo прописать доп функции для избавления от реплик кода
 // todo подумать над repository слоем
+// чекнуть pr модель и апи
 import (
 	"app/internal/models"
-	"errors"
+	"fmt"
 	"math/rand"
 	"time"
 
@@ -45,7 +46,7 @@ func (s *PullRequest) Create(pr_name string, author_id string) (models.PullReque
 
 	if err := tx.Create(&pullreq).Error; err != nil {
 		tx.Rollback()
-		return models.PullRequest{}, nil
+		return models.PullRequest{}, fmt.Errorf("pr exist")
 	}
 
 	var team models.Team
@@ -102,17 +103,17 @@ func (s *PullRequest) Merge(pr_id string) (models.PullRequest, error) {
 	tx := s.db.Begin()
 	defer tx.Rollback()
 	if err := s.db.First(&pullreq).Error; err != nil {
-		return models.PullRequest{}, err
+		return models.PullRequest{}, fmt.Errorf("pr not found")
 	}
 
 	if pullreq.Status == models.PRStatusMerge {
 		tx.Commit()
-		return pullreq, nil
+		return pullreq, fmt.Errorf("pr merge")
 	}
 
 	if pullreq.Status != models.PRStatusOpen {
 		tx.Commit()
-		return pullreq, errors.New("Not open")
+		return pullreq, fmt.Errorf("pr conflict")
 	}
 
 	now := time.Now()
@@ -136,11 +137,11 @@ func (s *PullRequest) Reassign(pr_id string, old_user_id string) (models.PullReq
 	defer tx.Rollback()
 
 	if err := tx.Preload("Reviewers").First(&pullreq).Error; err != nil {
-		return pullreq, err
+		return pullreq, fmt.Errorf("pr not found")
 	}
 
 	if pullreq.Status == models.PRStatusMerge {
-		return pullreq, errors.New("PR not found")
+		return pullreq, fmt.Errorf("pr already merge")
 	}
 
 	oldReviewerId := -1
@@ -152,7 +153,7 @@ func (s *PullRequest) Reassign(pr_id string, old_user_id string) (models.PullReq
 	}
 
 	if oldReviewerId == -1 {
-		return pullreq, errors.New("reviewer not found")
+		return pullreq, fmt.Errorf("no candidate")
 	}
 
 	var team models.Team
@@ -172,12 +173,12 @@ func (s *PullRequest) Reassign(pr_id string, old_user_id string) (models.PullReq
 	}
 
 	if len(reviewers) == 0 {
-		return pullreq, errors.New("not follow guys")
+		return pullreq, fmt.Errorf("not assign")
 	}
 
 	newReviewer := reviewers[rand.Intn(len(reviewers))]
 	if err := tx.Model(&pullreq).Association("Reviewers").Replace(&pullreq.Reviewers[oldReviewerId], &newReviewer); err != nil {
-		return pullreq, err
+		return pullreq, fmt.Errorf("not assign")
 	}
 
 	tx.Commit()
