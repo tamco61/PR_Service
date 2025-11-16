@@ -22,6 +22,10 @@ func (s *Team) Get(team_name string) (models.Team, error) {
 }
 
 func (s *Team) Add(team_name string, members []models.User) (models.Team, error) {
+	for i := range members {
+		s.db.Save(members[i])
+	}
+
 	team := models.Team{TeamName: team_name, Members: members}
 	err := s.db.Save(team).Error
 
