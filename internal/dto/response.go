@@ -1,7 +1,6 @@
 package dto
 
 // todo: сделать responese и заменить их в handler
-// todo ErrorResponese и в целом унифицировать выводы error
 
 type ErrorResponese struct {
 	Error ErrorDetail `json:"error" binding:"required"`
