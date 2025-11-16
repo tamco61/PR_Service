@@ -1,9 +1,5 @@
 package service
 
-// todo прописать ошибки
-// todo прописать доп функции для избавления от реплик кода
-// todo подумать над repository слоем
-// чекнуть pr модель и апи
 import (
 	"app/internal/models"
 	"fmt"

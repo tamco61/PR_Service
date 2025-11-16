@@ -1,8 +1,5 @@
 package service
 
-// todo прописать ошибки
-// todo прописать доп функции для избавления от реплик кода
-// todo подумать над repository слоем
 import (
 	"app/internal/models"
 

@@ -1,7 +1,5 @@
 package response
 
-// todo: сделать response и заменить их в handler
-
 type ErrorResponse struct {
 	Error ErrorDetail `json:"error" binding:"required"`
 }
