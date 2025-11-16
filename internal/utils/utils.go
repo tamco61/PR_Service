@@ -1,10 +1,12 @@
 package utils
 
-import "app/internal/dto"
+import (
+	"app/internal/dto/response"
+)
 
-func JSONError(code dto.ErrorCode, message string) dto.ErrorResponese {
-	return dto.ErrorResponese{
-		Error: dto.ErrorDetail{
+func JSONError(code response.ErrorCode, message string) response.ErrorResponse {
+	return response.ErrorResponse{
+		Error: response.ErrorDetail{
 			Code:    code,
 			Message: message,
 		},

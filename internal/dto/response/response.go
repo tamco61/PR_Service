@@ -1,8 +1,8 @@
-package dto
+package response
 
-// todo: сделать responese и заменить их в handler
+// todo: сделать response и заменить их в handler
 
-type ErrorResponese struct {
+type ErrorResponse struct {
 	Error ErrorDetail `json:"error" binding:"required"`
 }
 

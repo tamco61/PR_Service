@@ -1,4 +1,4 @@
-package dto
+package request
 
 // todo переписать почти все req по api доке
 import "app/internal/models"

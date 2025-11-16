@@ -18,5 +18,6 @@ type PullRequest struct {
 	Status    PRStatus `gorm:"default:'OPEN'"`
 	Reviewers []User   `gorm:"many2many:reviewers"`
 
-	MergedAt *time.Time `gorm:"default:null"`
+	MergedAt  *time.Time `gorm:"default:null"`
+	CreatedAt time.Time  `gorm:"autoCreateTime"`
 }

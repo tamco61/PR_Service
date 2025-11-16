@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"app/internal/dto"
 	requests "app/internal/dto"
+	"app/internal/dto/response"
 	"app/internal/service"
 	"app/internal/utils"
 	"net/http"
@@ -27,11 +27,12 @@ func (h *Team) Get(c *gin.Context) {
 
 	team, err := h.service.Get(req.TeamName)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, utils.JSONError(dto.ErrorCodeNotFound, "team not found"))
+		c.JSON(http.StatusBadRequest, utils.JSONError(response.ErrorCodeNotFound, "team not found"))
 		return
 	}
 
-	c.JSON(http.StatusOK, team)
+	resp := response.ToTeamResponse(&team)
+	c.JSON(http.StatusOK, resp)
 }
 
 func (h *Team) Add(c *gin.Context) {
@@ -43,10 +44,11 @@ func (h *Team) Add(c *gin.Context) {
 
 	team, err := h.service.Add(req.TeamName, req.Members)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, utils.JSONError(dto.ErrorCodeTeamExists, "team_name already exists"))
+		c.JSON(http.StatusBadRequest, utils.JSONError(response.ErrorCodeTeamExists, "team_name already exists"))
 		return
 	}
 
-	c.JSON(http.StatusCreated, team)
+	resp := response.ToTeamResponse(&team)
+	c.JSON(http.StatusCreated, resp)
 
 }

@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"app/internal/dto"
 	requests "app/internal/dto"
+	"app/internal/dto/response"
 	"app/internal/service"
 	"app/internal/utils"
 	"net/http"
@@ -25,13 +25,14 @@ func (h *User) GetReview(c *gin.Context) {
 		return
 	}
 
-	user, err := h.service.GetReview(req.ID)
+	prs, err := h.service.GetReview(req.ID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusCreated, user)
+	resp := response.ToReviewsResponse(req.ID, prs)
+	c.JSON(http.StatusOK, resp)
 
 }
 
@@ -44,9 +45,10 @@ func (h *User) SetIsActive(c *gin.Context) {
 
 	user, err := h.service.SetIsActive(req.ID, req.IsActive)
 	if err != nil {
-		c.JSON(http.StatusNotFound, utils.JSONError(dto.ErrorCodeNotFound, "user not found"))
+		c.JSON(http.StatusNotFound, utils.JSONError(response.ErrorCodeNotFound, "user not found"))
 		return
 	}
 
-	c.JSON(http.StatusOK, user)
+	resp := response.ToUserResponse(&user)
+	c.JSON(http.StatusOK, resp)
 }
